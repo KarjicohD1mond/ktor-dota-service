@@ -36,7 +36,7 @@ suspend fun main() {
             })
         }
     }
-    val response: HttpResponse = client.request("https://api.opendota.com/api/constants/heroes") {
+    val response: HttpResponse = client.request("https://api.opendota.com/api/constants/heroe2s") {
         method = HttpMethod.Get
     }
     val result = response.body<Map<String, HeroData>>()
