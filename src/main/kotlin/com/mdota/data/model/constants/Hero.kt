@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class HeroData(
+data class Hero(
     @kotlinx.serialization.SerialName("img")
     val img: String? = null,
     @kotlinx.serialization.SerialName("primary_attr")
