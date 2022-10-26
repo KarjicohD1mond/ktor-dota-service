@@ -2,7 +2,8 @@ package com.mdota
 
 
 
-import com.mdota.data.model.constants.HeroData
+import com.mdota.client.route.DotaConstantsService
+import com.mdota.data.model.constants.Hero
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -11,11 +12,10 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.util.*
-import kotlinx.serialization.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.*
-import kotlinx.serialization.builtins.*
-
 
 
 private val json = Json {
@@ -23,23 +23,10 @@ private val json = Json {
 }
 
 suspend fun main() {
-    val client = HttpClient() {
-        install(Logging) {
-            logger = Logger.DEFAULT
-            level = LogLevel.BODY
-        }
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-                ignoreUnknownKeys = true
-            })
+    coroutineScope {
+        withContext(Dispatchers.IO) {
+            val heroes = DotaConstantsService.getHeroes()
+            println(heroes)
         }
     }
-    val response: HttpResponse = client.request("https://api.opendota.com/api/constants/heroes") {
-        method = HttpMethod.Get
-    }
-    val result = response.body<Map<String, HeroData>>()
-    println(result)
-    client.close()
 }
