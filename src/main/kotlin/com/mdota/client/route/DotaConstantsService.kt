@@ -1,24 +1,29 @@
 package com.mdota.client.route
 
 import com.mdota.client.DotaApiClient.client
-import com.mdota.data.model.constants.Hero
-import com.mdota.data.model.constants.Item
+import com.mdota.data.model.constants.HeroDto
+import com.mdota.data.model.constants.ItemDto
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
 object DotaConstantsService : DotaApiService.Constants {
-    override suspend fun getHeroes(): Map<String, Hero> {
+    override suspend fun getHeroes(): List<HeroDto> {
         val response =
             client.get {
                 url {
                     path("/api/constants/heroes")
                 }
             }
-        return response.body()
+
+        val heroesMap = response.body<Map<String, HeroDto>>()
+        val heroesList = heroesMap.map {
+            it.value
+        }
+        return heroesList
     }
 
-    override suspend fun getItems(): Map<String, Item> {
+    override suspend fun getItems(): Map<String, ItemDto> {
         val response =
             client.get {
                 url {

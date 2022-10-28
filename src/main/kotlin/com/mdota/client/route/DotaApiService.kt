@@ -1,13 +1,17 @@
 package com.mdota.client.route
 
-import com.mdota.data.model.constants.Hero
-import com.mdota.data.model.constants.Item
+import com.mdota.data.model.constants.HeroDto
+import com.mdota.data.model.constants.ItemDto
+import com.mdota.data.model.constants.MatchItemDto
 
 abstract class DotaApiService {
     interface Constants {
-        suspend fun getHeroes(): Map<String, Hero>
-        suspend fun getItems(): Map<String, Item>
+        suspend fun getHeroes(): List<HeroDto>
+        suspend fun getItems(): Map<String, ItemDto>
     }
+
     interface Players {}
-    interface Matches {}
+    interface Matches {
+        suspend fun getProMatches(): List<MatchItemDto>
+    }
 }

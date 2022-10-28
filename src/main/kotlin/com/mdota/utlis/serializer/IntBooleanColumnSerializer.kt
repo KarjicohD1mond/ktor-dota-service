@@ -6,7 +6,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-object IntBooleanColumnSerializer : KSerializer<Int?> {
+object TypeBooleanAsEmptySerializer : KSerializer<Int?> {
     private val intSerializer = Int.serializer()
     override val descriptor: SerialDescriptor
         get() = Int.serializer().descriptor
